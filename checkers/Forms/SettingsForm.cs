@@ -1,4 +1,5 @@
-﻿using checkers.Classes;
+// Подключение необходимых пространств имен
+using checkers.Classes;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -11,10 +12,13 @@ using System.Windows.Forms;
 
 namespace checkers
 {
+    // Класс SettingsForm для управления настройками игры в форме Windows
     public partial class SettingsForm : Form
     {
+        // Свойство для определения корректности настроек
         public bool isCorrect { get; set; }
 
+        // Конструктор для инициализации формы и установки значений по умолчанию для комбо-боксов
         public SettingsForm()
         {
             InitializeComponent();
@@ -24,10 +28,13 @@ namespace checkers
             comboBoxFirstMovePvE.SelectedIndex = 0;
         }
 
+        // Обработчик события для начала игры "Игрок против Игрока"
         private void ButtonStartPvP(object sender, EventArgs e)
         {
+            // Проверка корректности настроек перед началом игры
             if (CheckSettingsPvP() == true)
             {
+                // Присвоение выбранных настроек свойствам класса Setting
                 Setting.BoardSize = comboBoxBoardSizePvP.Text;
                 Setting.ForceJump = checkBoxForceJumpPvP.Checked;
                 Setting.ShowMove = checkBoxShowMovesPvP.Checked;
@@ -35,24 +42,31 @@ namespace checkers
                 Setting.Player1Name = textBoxPlayer1PvP.Text;
                 Setting.Player2Name = textBoxPlayer2PvP.Text;
                 Setting.isAiPlay = false;
+                // Закрытие формы настроек
                 this.Close();
             }
         }
+
+        // Обработчик события для начала игры "Игрок против ИИ"
         private void ButtonStartPvE(object sender, EventArgs e)
         {
+            // Проверка корректности настроек перед началом игры
             if (CheckSettingsPvE() == true)
             {
+                // Присвоение выбранных настроек свойствам класса Setting
                 Setting.BoardSize = comboBoxBoardSizePvE.Text;
                 Setting.ForceJump = checkBoxForceJumpPvE.Checked;
                 Setting.ShowMove = checkBoxShowMovesPvE.Checked;
                 Setting.FirstMove = WhichTurn(comboBoxFirstMovePvE.Text);
                 Setting.Player1Name = textBoxPlayer1PvE.Text;
-                Setting.Player2Name = "Computer";
+                Setting.Player2Name = "Компьютер";
                 Setting.isAiPlay = true;
+                // Закрытие формы настроек
                 this.Close();
             }
         }
 
+        // Метод для проверки настроек игры "Игрок против Игрока"
         private bool CheckSettingsPvP()
         {
             isCorrect = false;
@@ -68,6 +82,7 @@ namespace checkers
             return isCorrect;
         }
 
+        // Метод для проверки настроек игры "Игрок против ИИ"
         private bool CheckSettingsPvE()
         {
             isCorrect = false;
@@ -76,20 +91,19 @@ namespace checkers
             return isCorrect;
         }
 
+        // Метод для проверки имени игрока
         private bool CheckPlayerName(TextBox Player, int Number, bool isPvP)
         {
             if (Player.Text == "")
             {
                 if (isPvP == true)
                 {
-                    MessageBox.Show("Player " + Number + " name is empty!");
-
+                    MessageBox.Show("Имя Игрока " + Number + " не заполнено!");
                     return false;
                 }
                 else
                 {
-                    MessageBox.Show("Player " + Number + " name is empty!");
-
+                    MessageBox.Show("Имя Игрока " + Number + " не заполнено!");
                     return false;
                 }
             }
@@ -97,21 +111,22 @@ namespace checkers
             {
                 if (isPvP == true)
                 {
-                    MessageBox.Show("Player  " + Number + " name is too long!\n");
+                    MessageBox.Show("Имя Игрока " + Number + " слишком длинное!\n");
                     return false;
                 }
                 else
                 {
-                    MessageBox.Show("Player  " + Number + " name is too long!\n");
+                    MessageBox.Show("Имя Игрока " + Number + " слишком длинное!\n");
                     return false;
                 }
             }
             return true;
         }
 
+        // Метод для определения первого хода
         private bool WhichTurn(string firstStart)
         {
-            if (firstStart == "Player 1" || firstStart == "Player")
+            if (firstStart == "Игрок 1" || firstStart == "Игрок")
                 return true;
             else
                 return false;
